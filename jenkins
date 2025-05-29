@@ -1,0 +1,44 @@
+pipeline {
+    agent any  // Run on any available agent
+
+    tools {
+        gradle 'Gradle'  // Must match the Gradle tool name in Jenkins
+        jdk 'JDK11'      // Must match the name of your JDK installation in Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/Bhumika954/gradlejenkinspipeline.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './gradlew clean build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                sh 'java -jar build/libs/gradlejenkinspipeline-1.0-SNAPSHOT.jar'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build and deployment successful!'
+        }
+        failure {
+            echo '❌ Build failed!'
+        }
+    }
+}
+
