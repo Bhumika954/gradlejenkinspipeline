@@ -17,8 +17,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
+
 application {
-    mainClass = 'com.example.App' // Your main class with public static void main
+    mainClass = 'com.example.App'
 }
 
 jar {
